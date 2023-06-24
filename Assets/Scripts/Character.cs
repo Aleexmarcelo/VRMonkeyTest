@@ -45,7 +45,7 @@ public class Character : MonoBehaviour {
         fireEffect.transform.position= transform.position + 0.3f * Vector3.up+0.2f*transform.forward;
         fireEffect.transform.forward = transform.forward;
 
-        GameObject thisBullet= GameObject.Instantiate(bullet);
+        GameObject thisBullet = GameObject.Instantiate(bullet);
         thisBullet.transform.position = transform.position + 0.3f * Vector3.up;
         thisBullet.transform.forward = transform.forward;
         thisBullet.GetComponent<DamageArea>().friend = friend;

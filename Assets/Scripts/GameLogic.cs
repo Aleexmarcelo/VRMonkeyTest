@@ -28,6 +28,8 @@ public class GameLogic : MonoBehaviour {
     public GameObject ShockText;
     public GameObject CloakText;
     public GameObject DrainText;
+    public GameObject hoverText;
+    public GameObject shootText;
 
     public GameObject enemyContainer;
     public GameObject enemyModel;
@@ -209,6 +211,14 @@ public class GameLogic : MonoBehaviour {
                 player.canDrain = true;
                 DrainText.SetActive(true);
                 break;
+            case Upgrade.Type.hover:
+                player.canHoverUpgrade = true;
+                hoverText.SetActive(true);
+                break;
+            case Upgrade.Type.shoot:
+                player.canShootUpgrade = true;
+                shootText.SetActive(true);
+                break;
         }
 
         StartCoroutine(EnablePlayerSkillRoutine(upgradeType, showText));
@@ -245,6 +255,24 @@ public class GameLogic : MonoBehaviour {
 
                     player.canDrain = true;
                     break;
+                case Upgrade.Type.hover:
+                    if (showText)
+                    {
+                        ShowMessageBox(
+                            "You acquired the HOVER power! Press S to Hover! While in Hover mode, you can move and enemies can't see or harm you!");
+                    }
+
+                    player.canHoverUpgrade = true;
+                    break;
+                case Upgrade.Type.shoot:
+                    if (showText)
+                    {
+                        ShowMessageBox(
+                            "You acquired the SHOT power! Press A to Shoot! You can disable enemies and your shots go through walls!");
+                    }
+
+                    player.canShootUpgrade = true;
+                    break;
             }
         }
         else
@@ -274,6 +302,24 @@ public class GameLogic : MonoBehaviour {
                     }
 
                     player.canDrain = true;
+                    break;
+                case Upgrade.Type.hover:
+                    if (showText)
+                    {
+                        ShowMessageBox(
+                            "You acquired the HOVER power! Press S to Hover! While in Hover mode, you can move and enemies can't see or harm you!");
+                    }
+
+                    player.canHoverUpgrade = true;
+                    break;
+                case Upgrade.Type.shoot:
+                    if (showText)
+                    {
+                        ShowMessageBox(
+                            "You acquired the SHOT power! Press A to Shoot! You can disable enemies and your shots go through walls!");
+                    }
+
+                    player.canShootUpgrade = true;
                     break;
             }
         }

@@ -5,8 +5,18 @@ using UnityEngine;
 public class StealthPlayerController : Character {
 
     
+    private bool hoverBool;
+    private float hoverEnergyMultiplier = 10f;
+    [SerializeField]
+    private GameObject hoverParticle;
+    [SerializeField]
+    private bool _isGrounded;
+    
     Camera cam;
     public Rigidbody rb;
+    
+    private const float shotCoolDown = 1.2f;
+    private bool canShotBool;
 
     public GameObject normalModel;
     public GameObject cloakedModel;
@@ -78,6 +88,8 @@ public class StealthPlayerController : Character {
     public bool canShock = false;
     public bool canCloak = false;
     public bool canDrain = false;
+    public bool canShootUpgrade = false;
+    public bool canHoverUpgrade = false;
 
     public ParticleSystem warpParticles;
     
@@ -106,7 +118,9 @@ public class StealthPlayerController : Character {
         {
             energyBar.SetInitialValues(maxEnergy, 0, energy);
         }
-	}
+
+        canShotBool = true;
+    }
 	
     public void SetEnergy(float val)
     {
@@ -347,6 +361,11 @@ public class StealthPlayerController : Character {
             {
                 energyDrain = energyDrain * cloakingEnergyMultiplier;
             }
+            
+            if(hoverBool)
+            {
+                energyDrain = energyDrain * hoverEnergyMultiplier;
+            }
 
             if (!moving)
             {
@@ -374,6 +393,31 @@ public class StealthPlayerController : Character {
                 GameLogic.instance.GameOver();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.A) && canShootUpgrade && canShotBool)
+        {
+            Fire();
+            SpendEnergy(10);
+            StartCoroutine(ShotCoroutine());
+        }
+
+
+        if(Input.GetKey(KeyCode.S) && canHoverUpgrade && _isGrounded)
+        {
+            Hover();
+            hoverBool = true;
+            cloaked = true;
+            _isGrounded = true;
+
+        }
+        else
+        {
+            hoverBool = false;
+            cloaked = false;
+            hoverParticle.gameObject.SetActive(false);
+            IsGrounded();
+        }
+
         
     }
 
@@ -480,6 +524,40 @@ public class StealthPlayerController : Character {
         }
     }
 
+    IEnumerator ShotCoroutine()
+    {
+        canShotBool = false;
+        yield return new WaitForSeconds(shotCoolDown);
+        canShotBool = true;
+    }
+    
+    void Hover()
+    {
+        float hoverSpeed = 5f;
+        float hoverHeight = 0.5f;
+
+        Vector3 pos = transform.position;
+
+        float newY = Mathf.Sin(Time.time * hoverSpeed);
+        transform.position = new Vector3(pos.x, (newY + 5f) * hoverHeight, pos.z);
+
+        hoverParticle.gameObject.SetActive(true);
+    }
+    
+    private void IsGrounded()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, .5f))
+        {
+            Debug.DrawRay(transform.position, Vector3.down * .5f, Color.red);
+            _isGrounded = true;
+        }
+        else
+        {
+            _isGrounded = false;
+        }
+    }
+    
+    
     public void Kill()
     {
 

@@ -28,12 +28,12 @@ public class DamageArea : MonoBehaviour {
    //     }
     }
 
-    void DestroyBullet(bool effect=true)
+    public void DestroyBullet(bool effect=true)
     {
         Destroy(gameObject);
     }
 
-	void OnTriggerEnter(Collider col)
+	public virtual void OnTriggerEnter(Collider col)
     {
         Character colCharacter = col.GetComponent<Character>();
         if(colCharacter!=null && colCharacter.friend != friend)
