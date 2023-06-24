@@ -272,18 +272,18 @@ public class GameLogic : MonoBehaviour {
         }
     }
 
-    public void EndGame()
+    public void EndGame(string nextScene)
     {
-        StartCoroutine(EndGameRoutine());
+        StartCoroutine(EndGameRoutine(nextScene));
     }
 
-    IEnumerator EndGameRoutine()
+    IEnumerator EndGameRoutine(string nextScene)
     {
         yield return new WaitForSeconds(1.0f);
         player.warpParticles.Play();
         yield return new WaitForSeconds(2.0f);
         HUDManager.instance.FadeInWhite(1.0f);
         yield return new WaitForSeconds(1.0f);
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(nextScene);
     }
 }

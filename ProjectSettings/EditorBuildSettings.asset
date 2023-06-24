@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/endGame.unity
     guid: e307a78d294b599479e107843675a041
+  - enabled: 1
+    path: Assets/Scenes/gameSceneReversed.unity
+    guid: da67b9a42654bd44db52ac13b6962fad
   m_configObjects: {}
