@@ -137,6 +137,15 @@ public class GameLogic : MonoBehaviour {
 
         player = StealthPlayerController.getInstance();
         currentCheckpointPosition = player.transform.position;
+        
+        switch (SceneManager.GetActiveScene().name)
+        {
+            case "gameSceneReversed":
+                EnablePlayerSkill(Upgrade.Type.shock, false);
+                EnablePlayerSkill(Upgrade.Type.cloak, false);
+                EnablePlayerSkill(Upgrade.Type.drain, false);
+                break;
+        }
     }
 
     public void SetCheckpoint(Vector3 position)
@@ -184,7 +193,7 @@ public class GameLogic : MonoBehaviour {
         ConsoleText.getInstance().ShowMessage("Single use keycard acquired");
     }
 
-   public void EnablePlayerSkill(Upgrade.Type upgradeType)
+   public void EnablePlayerSkill(Upgrade.Type upgradeType, bool showText = true)
     {
         switch (upgradeType)
         {
@@ -202,10 +211,10 @@ public class GameLogic : MonoBehaviour {
                 break;
         }
 
-        StartCoroutine(EnablePlayerSkillRoutine(upgradeType));
+        StartCoroutine(EnablePlayerSkillRoutine(upgradeType, showText));
     }
 
-    IEnumerator EnablePlayerSkillRoutine(Upgrade.Type upgradeType)
+    IEnumerator EnablePlayerSkillRoutine(Upgrade.Type upgradeType, bool showText)
     {
         yield return new WaitForSeconds(0.5f);
         if (Input.GetJoystickNames().Length == 0)
@@ -214,13 +223,26 @@ public class GameLogic : MonoBehaviour {
             {
                 case Upgrade.Type.shock:
 
-                    ShowMessageBox("You acquired the SHOCK power! Press X to stun enemies!");
+                    if (showText)
+                    {
+                        ShowMessageBox("You acquired the SHOCK power! Press X to stun enemies!");
+                    }
+
                     break;
                 case Upgrade.Type.cloak:
-                    ShowMessageBox("You acquired the CLOAK power! Press C to become invisible!");
+                    if (showText)
+                    {
+                        ShowMessageBox("You acquired the CLOAK power! Press C to become invisible!");
+                    }
+
                     break;
                 case Upgrade.Type.drain:
-                    ShowMessageBox("You acquired the DRAIN power! Press V to drain enemies' energy! ONLY WORKS ON UNAWARE ENEMIES");
+                    if (showText)
+                    {
+                        ShowMessageBox(
+                            "You acquired the DRAIN power! Press V to drain enemies' energy! ONLY WORKS ON UNAWARE ENEMIES");
+                    }
+
                     player.canDrain = true;
                     break;
             }
@@ -231,13 +253,26 @@ public class GameLogic : MonoBehaviour {
             {
                 case Upgrade.Type.shock:
 
-                    ShowMessageBox("You acquired the SHOCK power! Press X to stun enemies!");
+                    if (showText)
+                    {
+                        ShowMessageBox("You acquired the SHOCK power! Press X to stun enemies!");
+                    }
+
                     break;
                 case Upgrade.Type.cloak:
-                    ShowMessageBox("You acquired the CLOAK power! Press B to become invisible!");
+                    if (showText)
+                    {
+                        ShowMessageBox("You acquired the CLOAK power! Press C to become invisible!");
+                    }
+
                     break;
                 case Upgrade.Type.drain:
-                    ShowMessageBox("You acquired the DRAIN power! Press Y to drain enemies' energy! ONLY WORKS ON UNAWARE ENEMIES");
+                    if (showText)
+                    {
+                        ShowMessageBox(
+                            "You acquired the DRAIN power! Press V to drain enemies' energy! ONLY WORKS ON UNAWARE ENEMIES");
+                    }
+
                     player.canDrain = true;
                     break;
             }
