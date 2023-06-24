@@ -26,6 +26,11 @@ public class RobotThreadController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (GameLogic.instance == null)
+        {
+            return;
+        }
+        
         if (GameLogic.instance.gameState != GameLogic.GameStates.gameplay)
         {
             return;
