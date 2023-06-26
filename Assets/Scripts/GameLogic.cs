@@ -169,6 +169,21 @@ public class GameLogic : MonoBehaviour {
         GameObject.Destroy(enemyContainer);
         enemyContainer= GameObject.Instantiate(enemyModel);
 
+        var boss = FindObjectOfType<Boss>();
+        if (boss)
+        {
+            boss.ResetBoss();
+        
+            foreach (var redBattery in boss.redBatteries)
+            {
+                if (redBattery != null)
+                {
+                    Destroy(redBattery);
+                }
+            }
+            boss.redBatteries.Clear();
+        }
+
         for(int i = 0; i < batteries.Length; i++)
         {
             batteries[i].gameObject.SetActive(true);

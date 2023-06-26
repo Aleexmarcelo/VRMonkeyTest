@@ -406,21 +406,24 @@ public class StealthPlayerController : Character {
         {
             Hover();
             hoverBool = true;
-            cloaked = true;
             _isGrounded = true;
 
         }
         else
         {
             hoverBool = false;
-            cloaked = false;
             hoverParticle.gameObject.SetActive(false);
             IsGrounded();
         }
 
-        
+        transform.position = new Vector3(
+            transform.position.x,
+            transform.position.y > maxY ? maxY : transform.position.y,
+            transform.position.z);
+
     }
 
+    public float maxY = 0;
     public ParticleSystem damageParticle;
 
     public override void DealDamage(float val)

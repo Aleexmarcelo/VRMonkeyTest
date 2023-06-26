@@ -20,7 +20,7 @@ public class ShockDamageArea : MonoBehaviour {
     }
 
 
-    void DestroyBullet(bool effect=true)
+    void DestroyBullet(bool effect = true)
     {
         Destroy(gameObject);
     }
@@ -31,6 +31,12 @@ public class ShockDamageArea : MonoBehaviour {
         if(colAIagent != null)
         {
             colAIagent.OnShock(5);
+        }
+
+        var redBattery = col.GetComponent<RedBattery>();
+        if (redBattery)
+        {
+            redBattery.ConvertBattery();
         }
     }
 }

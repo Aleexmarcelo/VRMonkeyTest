@@ -14,21 +14,19 @@ public class PlayerBullet : DamageArea
 
             DestroyBullet();
         }
-        // else if(col.tag == "Boss")
-        // {
-        //     AIAgent colBoss = col.GetComponentInParent<AIAgent>();
-        //     Debug.Log(colBoss.name);
-        //     if(colBoss.currentStateType != AIAgent.StateType.chasing)
-        //     {
-        //         return;
-        //     }
-        //     else
-        //      {
-        //        colBoss.stunParticles.Play();
-        //          StartCoroutine(colBoss.chasingState.BossSlow(0.8f));
-        //     
-        //         DestroyBullet();
-        //      }
-        // }
+        
+        var cannon = col.GetComponentInParent<Cannon>();
+
+        if (cannon)
+        {
+            if (cannon.CanShoot())
+            {
+                cannon.Shoot();
+
+                var player = StealthPlayerController.getInstance();
+            
+                player.AddEnergy(20);
+            }
+        }
     }
 }
